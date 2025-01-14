@@ -48,7 +48,7 @@ const roobTransporter = nodemailer.createTransport({
 });
 
 export const sendRoobRequestEmail = async (req, res) => {
-  const { formData } = res.body;
+  const { formData } = req.body;
   const { name, contactEmail, type, variant, message } = formData;
   const mailOptions = {
     from: process.env.ROOB_EMAIL_USER,
