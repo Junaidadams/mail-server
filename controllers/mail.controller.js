@@ -43,8 +43,7 @@ const roobTransporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.ROOB_EMAIL_USER,
-    pass: process.env,
-    ROOB_EMAIL_PASS,
+    pass: process.env.ROOB_EMAIL_PASS,
   },
 });
 
