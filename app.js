@@ -9,9 +9,13 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
-    origin: ["http://localhost:5175/"],
-    origin: ["http://localhost:5175"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5175",
+      "http://localhost:5175/",
+    ],
+
+    //  // List all allowed origins
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
