@@ -49,11 +49,11 @@ const roobTransporter = nodemailer.createTransport({
 
 export const sendRoobRequestEmail = async (req, res) => {
   const { formData } = req.body;
-  const { name, contactEmail, type, variant, message } = formData;
+  const { firstName, contactEmail, type, variant, message } = formData;
   const mailOptions = {
     from: process.env.ROOB_EMAIL_USER,
     to: contactEmail,
-    subject: `${type} ${variant} commission piece requested from ${name}`,
+    subject: `${type} ${variant} commission piece requested from ${firstName}`,
     text: `${message}`,
   };
 
