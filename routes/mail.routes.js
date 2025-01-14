@@ -1,8 +1,12 @@
 import express from "express";
-import { sendServiceEmail } from "../controllers/mail.controller.js"; // Ensure the correct extension
+import {
+  sendServiceEmail,
+  sendRoobRequestEmail,
+} from "../controllers/mail.controller.js";
 
 const router = express.Router();
 
 router.post("/service-email", sendServiceEmail);
+router.post("/roob-commission-request", sendRoobRequestEmail);
 
 export default router;

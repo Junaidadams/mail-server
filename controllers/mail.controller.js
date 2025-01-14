@@ -1,6 +1,7 @@
+import { text } from "express";
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
+const portfolioTransporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER, // your Gmail address
@@ -29,7 +30,36 @@ ${selectedPages}
 ${!includeRetainer ? "No retainer requested" : "Retainer requested."}`,
   };
   try {
-    await transporter.sendMail(mailOptions);
+    await portfolioTransporter.sendMail(mailOptions);
+    res.status(200).json({
+      message: "Email sent successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to send email." });
+  }
+};
+
+const roobTransporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.ROOB_EMAIL_USER,
+    pass: process.env,
+    ROOB_EMAIL_PASS,
+  },
+});
+
+export const sendRoobRequestEmail = async (req, res) => {
+  const { formData } = res.body;
+  const { fields } = formData;
+  const mailOptions = {
+    from: process.env.ROOB_EMAIL_USER,
+    to: fields,
+    subject: `${fields} commission piece requested`,
+    text: `${message}`,
+  };
+
+  try {
+    await roobTransporter.sendMail(mailOptions);
     res.status(200).json({
       message: "Email sent successfully!",
     });
