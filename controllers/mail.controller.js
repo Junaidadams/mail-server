@@ -9,15 +9,25 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendServiceEmail = async (req, res) => {
-  const { serviceEmailData } = req.body;
+  const { formData } = req.body;
+  // if (!formData || !formData.selectedPackage) {
+  //   return res.status(400).json({ message: "Invalid data provided." });
+  // }
+  const { selectedPackage, selectedPages, message, includeRetainer } = formData;
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
-    subject: ``,
-    text: `
-    `,
-  };
+    subject: `${selectedPackage} website requested`,
+    text: `${
+      !message
+        ? "No message provided"
+        : `They added the following message: "${message}"`
+    }
+    
+${selectedPages} 
 
+${!includeRetainer ? "No retainer requested" : "Retainer requested."}`,
+  };
   try {
     await transporter.sendMail(mailOptions);
     res.status(200).json({
