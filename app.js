@@ -16,7 +16,6 @@ app.use(
 );
 
 app.get("/ping", (req, res) => {
-  e;
   res.status(200).send("Ok");
 });
 
