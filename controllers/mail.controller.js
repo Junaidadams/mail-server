@@ -48,21 +48,26 @@ const roobTransporter = nodemailer.createTransport({
 });
 
 export const sendRoobRequestEmail = async (req, res) => {
-  const { formData } = req.body;
-  const { firstName, contactEmail, type, variant, message } = formData;
+  const { firstName, contactEmail, type, variant, message } = req.body; // Fixed destructuring
+
   const mailOptions = {
     from: process.env.ROOB_EMAIL_USER,
-    to: contactEmail,
-    subject: `${type} ${variant} commission piece requested from ${firstName}`,
-    text: `${message}`,
+    to: process.env.ROOB_EMAIL_USER, // Send to your email instead of user's email
+    replyTo: contactEmail, // Allows you to reply directly to the requester
+    subject: `New Commission Request: ${type} - ${variant} by ${firstName}`,
+    text: `You have received a new commission request.\n\n
+    Name: ${firstName}\n
+    Email: ${contactEmail}\n
+    Type: ${type}\n
+    Variant: ${variant}\n
+    Message:\n${message}`,
   };
 
   try {
     await roobTransporter.sendMail(mailOptions);
-    res.status(200).json({
-      message: "Email sent successfully!",
-    });
+    res.status(200).json({ message: "Email sent successfully!" });
   } catch (error) {
+    console.error("Email sending error:", error);
     res.status(500).json({ message: "Failed to send email." });
   }
 };
