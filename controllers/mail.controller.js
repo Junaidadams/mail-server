@@ -60,7 +60,8 @@ export const sendRoobRequestEmail = async (req, res) => {
     Email: ${contactEmail}\n
     Type: ${type}\n
     Variant: ${variant}\n
-    Message:\n${message}`,
+    Message:\n
+    "${message}"`,
   };
 
   try {
