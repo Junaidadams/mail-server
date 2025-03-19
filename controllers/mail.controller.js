@@ -54,7 +54,7 @@ export const sendRoobRequestEmail = async (req, res) => {
 
   const mailOptions = {
     from: `"Roob Commissions" <${process.env.ROOB_EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
+    to: "onlineroobb@gmail.com",
     replyTo: contactEmail,
     subject: `New Commission Request: ${type} - ${variant} by ${firstName}`,
     html: `
