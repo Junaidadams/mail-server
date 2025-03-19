@@ -40,7 +40,9 @@ ${!includeRetainer ? "No retainer requested" : "Retainer requested."}`,
 };
 
 const roobTransporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "mail.roob.online",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.ROOB_EMAIL_USER,
     pass: process.env.ROOB_EMAIL_PASS,
@@ -48,27 +50,36 @@ const roobTransporter = nodemailer.createTransport({
 });
 
 export const sendRoobRequestEmail = async (req, res) => {
-  const { firstName, contactEmail, type, variant, message } = req.body; // Fixed destructuring
+  const { firstName, contactEmail, type, variant, message } = req.body;
 
   const mailOptions = {
-    from: process.env.ROOB_EMAIL_USER,
-    to: process.env.ROOB_EMAIL_USER, // Send to your email instead of user's email
-    replyTo: contactEmail, // Allows you to reply directly to the requester
+    from: `"Roob Commissions" <${process.env.ROOB_EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
+    replyTo: contactEmail,
     subject: `New Commission Request: ${type} - ${variant} by ${firstName}`,
-    text: `You have received a new commission request.\n\n
-    Name: ${firstName}\n
-    Email: ${contactEmail}\n
-    Type: ${type}\n
-    Variant: ${variant}\n
-    Message:\n
-    "${message}"`,
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #333;">New Commission Request</h2>
+          <p><strong>Name:</strong> ${firstName}</p>
+          <p><strong>Email:</strong> ${contactEmail}</p>
+          <p><strong>Type:</strong> ${type}</p>
+          <p><strong>Variant:</strong> ${variant}</p>
+          <hr>
+          <h3 style="color: #555;">Message:</h3>
+          <p style="background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
+        </div>
+      </div>
+    `,
   };
 
   try {
     await roobTransporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Email sent successfully!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
-    console.error("Email sending error:", error);
-    res.status(500).json({ message: "Failed to send email." });
+    console.error("Email sending failed:", error);
+    res.status(500).json({ success: false, message: "Failed to send email." });
   }
 };
