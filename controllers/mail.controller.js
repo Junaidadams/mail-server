@@ -104,7 +104,7 @@ export const sendBiteSizedMenuOrderRequestEmail = async (req, res) => {
         <div style="max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h2 style="color: #333;">New Commission Request</h2>
           <p><strong>Name:</strong> ${formData.name}</p>
-          <p><strong>Email:</strong> ${formData.contactEmail}</p>
+          <p><strong>Email:</strong> ${formData.email}</p>
           <p><strong>Email:</strong> ${formData.number}</p>
           <hr>
           <h3 style="color: #555;">Message:</h3>
@@ -117,7 +117,7 @@ export const sendBiteSizedMenuOrderRequestEmail = async (req, res) => {
   };
 
   try {
-    await biteSizedTransporter.sendMail(mailOptions);
+    await portfolioTransporter.sendMail(mailOptions);
     res
       .status(200)
       .json({ success: true, message: "Email sent successfully!" });
