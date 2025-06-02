@@ -109,7 +109,9 @@ export const sendBiteSizedMenuOrderRequestEmail = async (req, res) => {
           <hr>
           <h3 style="color: #555;">Message:</h3>
           <ul style="background: #f5f5f5; padding: 10px; border-radius: 5px;">${cartItems.map(
-            (item) => <li key={item.key}>{item.name}</li>
+            (item) => {
+              <li key={item.key}>{item.name}</li>;
+            }
           )}</ul>
         </div>
       </div>
