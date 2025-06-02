@@ -1,4 +1,3 @@
-import { text } from "express";
 import nodemailer from "nodemailer";
 
 const portfolioTransporter = nodemailer.createTransport({
@@ -97,18 +96,21 @@ export const sendBiteSizedMenuOrderRequestEmail = async (req, res) => {
 
   const mailOptions = {
     from: `"Contact " <${process.env.ROOB_EMAIL_USER}>`,
-    to: "thebitesizedmenu@gmail.com",
-    replyTo: formData.contactEmail,
-    subject: `${firstName} has contact you:`,
+    to: "junaidadams117@gmail.com",
+    replyTo: formData.email,
+    subject: `${formData.name} has contact you:`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
         <div style="max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <h2 style="color: #333;">New Commission Request</h2>
-          <p><strong>Name:</strong> ${firstName}</p>
-          <p><strong>Email:</strong> ${contactEmail}</p>
+          <p><strong>Name:</strong> ${formData.name}</p>
+          <p><strong>Email:</strong> ${formData.contactEmail}</p>
+          <p><strong>Email:</strong> ${formData.number}</p>
           <hr>
           <h3 style="color: #555;">Message:</h3>
-          <p style="background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
+          <ul style="background: #f5f5f5; padding: 10px; border-radius: 5px;">${cartItems.map(
+            (item) => <li key={item.key}>{item.name}</li>
+          )}</ul>
         </div>
       </div>
     `,
