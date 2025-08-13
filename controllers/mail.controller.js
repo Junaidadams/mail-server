@@ -43,8 +43,8 @@ export const sendServiceEmail = async (req, res) => {
         ? "No message provided"
         : `They added the following message: "${message}"`
     }
-    
-${selectedPages} 
+
+${selectedPages}
 
 ${!includeRetainer ? "No retainer requested" : "Retainer requested."}`,
   };
@@ -55,6 +55,39 @@ ${!includeRetainer ? "No retainer requested" : "Retainer requested."}`,
     });
   } catch (error) {
     res.status(500).json({ message: "Failed to send email." });
+  }
+};
+
+export const sendPortfolioContactEmail = async (req, res) => {
+  const { name, email, message } = req.body;
+
+  const mailOptions = {
+    from: `"Contact " <${process.env.EMAIL_USER}>`,
+    to: "junaidadams117@gmail.com",
+    replyTo: email,
+    subject: `${name} has contacted you:`,
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          <h2 style="color: #333;">New Contact Email</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <hr>
+          <h3 style="color: #555;">Message:</h3>
+          <p style="background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
+        </div>
+      </div>
+    `,
+  };
+
+  try {
+    await portfolioTransporter.sendMail(mailOptions);
+    res
+      .status(200)
+      .json({ success: true, message: "Email sent successfully!" });
+  } catch (error) {
+    console.error("Email sending failed:", error);
+    res.status(500).json({ success: false, message: "Failed to send email." });
   }
 };
 
