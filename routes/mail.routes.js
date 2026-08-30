@@ -1,18 +1,14 @@
 import express from "express";
 import {
   sendServiceEmail,
-  sendRoobRequestEmail,
-  sendBiteSizedMenuContactEmail,
-  sendBiteSizedMenuOrderRequestEmail,
   sendPortfolioContactEmail,
+  sendWithinReachContactEmail,
 } from "../controllers/mail.controller.js";
 
 const router = express.Router();
 
 router.post("/service-email", sendServiceEmail);
 router.post("/portfolio-contact", sendPortfolioContactEmail);
-router.post("/roob-commission-request", sendRoobRequestEmail);
-router.post("/bitesized-contact-email", sendBiteSizedMenuContactEmail);
-router.post("/bitesized-order-request", sendBiteSizedMenuOrderRequestEmail);
+router.post("/withinreach-contact", sendWithinReachContactEmail);
 
 export default router;

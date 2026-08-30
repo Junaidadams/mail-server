@@ -1,1 +1,13 @@
+# Dependencies — no longer committed
+node_modules/
+/node_modules
+
+# Environment / secrets
 .env
+
+# OS / editor junk
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

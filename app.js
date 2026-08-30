@@ -15,8 +15,8 @@ app.use(
       "http://localhost:5175",
       "https://junaidadams.com",
       "www.junaidadams.com",
-      "https://roob.online",
-      "www.roob.online",
+      "https://withinreach.co.za",
+      "www.withinreach.co.za",
     ],
 
     //  // List all allowed origins
